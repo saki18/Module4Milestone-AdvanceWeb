@@ -6,25 +6,29 @@
 package takahm;
 
 import edu.lcc.citp.utility.CollectionFileStorageUtility;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Takahashi
  */
-    public class FileUserDao implements DataAccessObject<User>{
+public class FileUserDao implements DataAccessObject<User> {
 
-        @Override
-        public void create(User entity) {
-        
+    @Override
+    public void create(User entity) {
+
         // this will create the Product List
-        List<Product> pList = getProductList();
+        List<Product> pList = readAll();
 
-        if (getProduct(p.getUpc()) != null) {
+        if (read(entity.getUsername()) != null) {
             System.out.println("Product already exists.");
         } else {
-            pList.add(p);
+            pList.add();
             Collections.sort(pList);
             CollectionFileStorageUtility.save(pList, Product.class);
         }
@@ -33,57 +37,36 @@ import java.util.List;
 
     @Override
     public User read(Object id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<User> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(User Entity) {
-       
-    }
-
-    @Override
-    public void delete(Object id) {
-        
-    }
-        
-        
-        }
-
-        @Override
-        public User read(Object id) {
-         
-        Product matchP = null;
-        for (p: readAll()) {
-            if (p.getUpc().equals(Upc)) {
+        User matchP = null;
+        for (User p : readAll()) {
+            if (p.getUsername().equals(id)) {
                 matchP = p;
             }
         }
 
         return matchP;
-        
+    }
 
+    @Override
+    public List<User> readAll() {
+        try {
+            return new ArrayList<>(CollectionFileStorageUtility.load(User.class));
+        } catch (IOException ex) {
+            Logger.getLogger(FileUserDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FileUserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ArrayList<>();
+    }
 
-}
+    @Override
+    public void update(User Entity) {
 
-        @Override
-        public List<User> readAll() {
-            
-        return new ArrayList<>(CollectionFileStorageUtility.load(Product.class));
-        
-}
+        List<Product> pList = readAll();
 
-        @Override
-        public void update(User Entity) {
-            List<Product> pList = readAll();
-
-        matchP = null;
-        for (pElement : pList) {
-            if (pElement.getUpc().equals(Entity.getUpc())) {
+       Product matchP = null;
+        for (Product pElement : pList) {
+            if (pElement.getUpc().equals(p.getUpc())) {
                 matchP = pElement;
             }
         }
@@ -91,32 +74,32 @@ import java.util.List;
         if (matchP == null) {
             System.out.println("Product not found.");
         } else {
-            if (Entity.getLongDetails() != null) {
-                matchP.setLongDetails(Entity.getLongDetails());
+            if (p.getLongDetails() != null) {
+                matchP.setLongDetails(p.getLongDetails());
             }
-            if (Entity.getPrice() != null) {
-                matchP.setPrice(Entity.getPrice());
+            if (p.getPrice() != null) {
+                matchP.setPrice(p.getPrice());
             }
-            if (Entity.getShortDetails() != null) {
-                matchP.setShortDetails(Entity.getShortDetails());
+            if (p.getShortDetails() != null) {
+                matchP.setShortDetails(p.getShortDetails());
             }
-            if (Entity.getStock() != null) {
-                matchP.setStock(Entity.getStock());
+            if (p.getStock() != null) {
+                matchP.setStock(p.getStock());
             }
 
-            CollectionFileStorageUtility.save(pList);
+            CollectionFileStorageUtility.save(pList, Product.class);
         }
 
-}
+    }
+    
+    @Override
+    public void delete(Object id) {
 
-        @Override
-        public void delete(Object id) {
-       
         List<Product> pList = readAll();
 
         matchP = null;
-        for (p: pList) {
-            if (p.getUpc().equals(upc)) {
+        for (Product p : pList) {
+            if (p.getUpc().equals()) {
                 matchP = p;
                 break;
             }
@@ -128,5 +111,6 @@ import java.util.List;
             pList.remove(matchP);
             CollectionFileStorageUtility.save(pList, Product.class);
 
-}
+        }
     }
+}

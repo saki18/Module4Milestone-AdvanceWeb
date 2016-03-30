@@ -18,6 +18,14 @@ public class User implements Serializable {
     public String INVENTORY_MANAGER = "INV_MAN";
 
     private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
     private String password;
     private Set<String> roles;
 

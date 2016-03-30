@@ -17,14 +17,14 @@ import java.util.List;
 public class FileProductDao implements DataAccessObject<Product>{
 
     @Override
-    public void create(Product entity) {
+    public void create(Product Entity) {
     
          List<Product> pList = readAll();
 
-        if (getProduct(entity.getUpc()) != null) {
+        if (getProduct(Entity.getUpc()) != null) {
             System.out.println("Product already exists.");
         } else {
-            pList.add(entity);
+            pList.add(Entity);
             Collections.sort(pList);
             CollectionFileStorageUtility.save(pList, Product.class);
         }
@@ -36,8 +36,8 @@ public class FileProductDao implements DataAccessObject<Product>{
     public Product read(Object id) {
         
     Product matchP = null;
-        for (p: readAll()) {
-            if (p.getUpc().equals(Upc)) {
+        for (Product p: readAll()) {
+            if (Product.getUpc().equals(id)) {
                 matchP = p;
             }
         }
@@ -48,17 +48,17 @@ public class FileProductDao implements DataAccessObject<Product>{
     @Override
     public List<Product> readAll() {
     
-    return new ArrayList<>(CollectionFileStorageUtility.load);
+    return new ArrayList<>(CollectionFileStorageUtility.load(Product.class));
     
     }
 
     @Override
     public void update(Product Entity) {
         
-             List<Product> pList = readAll();
+   List<Product> pList = readAll();
 
-        edu.lcc.citp.inventory.Product matchP = null;
-        for (edu.lcc.citp.inventory.Product pElement : pList) {
+        Product matchP = null;
+        for (Product pElement : pList) {
             if (pElement.getUpc().equals(Entity.getUpc())) {
                 matchP = pElement;
             }
@@ -87,22 +87,12 @@ public class FileProductDao implements DataAccessObject<Product>{
 
     @Override
     public void delete(Object id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-    
-    }
-
-    @Override
-    public void delete(Object id) {
         
-    }
-        List<Product> pList = readAll();
+          List<Product> pList = readAll();
 
-        matchP = null;
-        for (p: pList) {
-            if (p.getUpc().equals(upc)) {
+        Product matchP = null;
+        for (Product p : pList) {
+            if (p.getUpc().equals(id)) {
                 matchP = p;
                 break;
             }
@@ -112,9 +102,8 @@ public class FileProductDao implements DataAccessObject<Product>{
             System.out.println("Product not found.");
         } else {
             pList.remove(matchP);
-            CollectionFileStorageUtility.save(pList, edu.lcc.citp.inventory.Product.class);
+            CollectionFileStorageUtility.save(pList,Product.class);
         }
 
     }
-    
 }
