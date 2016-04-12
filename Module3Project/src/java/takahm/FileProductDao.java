@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Masaki Takahashi
+ * CITP 290 - Advance Java Programming for Business. 
+ * April 12, 2016 
+ * Instructor: Zach Hoffman
+ * Abstract: The following program is part of a fullfiment for CITP 290, the following program 
+ * will allow the user to create, edit, update, delete, and read the data product list 
+ * through a web interface. 
  */
 package takahm;
 
@@ -15,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * FileProductDao will allow the user to read, create, edit and update Product list.
  * @author Takahashi
  */
 public class FileProductDao implements DataAccessObject<Product> {

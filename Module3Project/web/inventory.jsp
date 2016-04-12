@@ -19,12 +19,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Inventory</title>
-<%
-            if (this.getServletContext().getAttribute("productDao") == null) {
-                this.getServletContext().setAttribute("productDao", DataAccessObjectFactory.getProductDao());
+        <%
+            DataAccessObject<Product> productDao = (DataAccessObject) this.getServletContext().getAttribute("productBean");
+            if (productDao == null) {
+                productDao = DataAccessObjectFactory.getProductDao();
+                this.getServletContext().setAttribute("productBean", productDao);
             }
-%>
-        <jsp:useBean id="productDao" scope="application" type="takahm.DataAccessObject<Product>" />
+            DataAccessObject<User> userDao = (DataAccessObject) this.getServletContext().getAttribute("userBean");
+            if (userDao == null) {
+                userDao = DataAccessObjectFactory.getUserDao();
+                this.getServletContext().setAttribute("userBean", userDao);
+            }
+        %>
     </head>
     <body>
         <h1>Inventory</h1>

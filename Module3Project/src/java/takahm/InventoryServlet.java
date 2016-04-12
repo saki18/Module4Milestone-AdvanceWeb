@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  * product inventory and display the list of all saved products that was created.
  * 
  *
- * @author takahashi 
+ * @author Takahashi 
  */
 @WebServlet("/inventory")
 public class InventoryServlet extends HttpServlet {
